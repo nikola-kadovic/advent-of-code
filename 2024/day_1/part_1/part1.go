@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"os"
 	"sort"
+
+	"github.com/nikola-kadovic/advent-of-code/utils"
 )
 
 func main() {
@@ -28,15 +30,8 @@ func main() {
 	dist := 0
 
 	for i := range len(left) {
-		dist += abs(right[i] - left[i])
+		dist += utils.Abs(right[i] - left[i])
 	}
 
 	fmt.Println(dist)
-}
-
-func abs(a int) int {
-	if a < 0 {
-		return -a
-	}
-	return a
 }
