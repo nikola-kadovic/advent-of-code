@@ -1,5 +1,11 @@
 package utils
 
+import "golang.org/x/exp/constraints"
+
+type Number interface {
+    constraints.Integer
+}
+
 func Abs(a int) int {
 	if a < 0 {
 		return -a
@@ -64,4 +70,16 @@ func SetFrom2DMap[T comparable, V any](mp *map[T]map[T]V, first, second T, val V
 	}
 
 	(*mp)[first][second] = val
+}
+
+func Pow[T Number](a, b T) T {
+	if b == 0 {
+		return 1
+	}
+
+	if b%2 == 0 {
+		return Pow(a*a, b/2)
+	}
+
+	return a * Pow(a, b-1)
 }
