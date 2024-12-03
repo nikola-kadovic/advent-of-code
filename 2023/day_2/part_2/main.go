@@ -25,6 +25,8 @@ func main() {
 
 		fmt.Sscanf(header, "Game %d", &index)
 
+		var minR, minG, minB int = 0, 0, 0
+
 		for _, run := range strings.Split(game, ";") {
 
 			for _, play := range strings.Split(run, ",") {
@@ -35,11 +37,11 @@ func main() {
 
 				switch color {
 				case "red":
-					isOkay = isOkay && amt <= 12
+					minR = utils.Max(minR, amt)
 				case "green":
-					isOkay = isOkay && amt <= 13
+					minG = utils.Max(minG, amt)
 				case "blue":
-					isOkay = isOkay && amt <= 14
+					minB = utils.Max(minB, amt)
 				}
 				if !isOkay {
 					break
@@ -47,7 +49,7 @@ func main() {
 			}
 		}
 
-		ans += index * utils.BoolToInt(isOkay)
+		ans += minB * minG * minR
 	}
 
 	fmt.Println(ans)

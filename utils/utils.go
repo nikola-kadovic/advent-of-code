@@ -20,3 +20,10 @@ func Max(a, b int) int {
 	}
 	return b
 }
+
+func BoolToInt(b bool) int {
+	if b {
+		return 1
+	}
+	return 0
+}
