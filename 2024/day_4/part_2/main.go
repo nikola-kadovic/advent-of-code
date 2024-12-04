@@ -6,8 +6,6 @@ import (
 	"os"
 )
 
-var word []byte = []byte{'X', 'M', 'A', 'S'}
-
 func main() {
 	scanner := bufio.NewScanner(os.Stdin)
 
