@@ -22,9 +22,7 @@ func main() {
 	for i := 0; i < len(board); i++ {
 		for j := 0; j < len(board[i]); j++ {
 			ans += explorePoint(board, i, j)
-			// fmt.Print(explorePoint(board, i, j), " ")
 		}
-		// fmt.Println()
 	}
 
 	fmt.Println(ans)
