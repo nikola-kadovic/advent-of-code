@@ -1,9 +1,14 @@
 package utils
 
-import "golang.org/x/exp/constraints"
+import (
+	"strconv"
+	"strings"
+
+	"golang.org/x/exp/constraints"
+)
 
 type Number interface {
-    constraints.Integer
+	constraints.Integer
 }
 
 func Abs(a int) int {
@@ -34,18 +39,22 @@ func BoolToInt(b bool) int {
 	return 0
 }
 
-type Pair struct {
+type Vec struct {
 	First, Second int
 }
 
-var DiffAdj = []Pair{
+func (v Vec) Add(other Vec) Vec {
+	return Vec{v.First + other.First, v.Second + other.Second}
+}
+
+var DiffAdj = []Vec{
 	{0, 1},
 	{1, 0},
 	{0, -1},
 	{-1, 0},
 }
 
-var DiffAdjDiagonal []Pair = []Pair{
+var DiffAdjDiagonal []Vec = []Vec{
 	{0, 1},
 	{1, 0},
 	{0, -1},
@@ -82,4 +91,46 @@ func Pow[T Number](a, b T) T {
 	}
 
 	return a * Pow(a, b-1)
+}
+
+func StrArrToIntArr(arr, delim string) []int {
+	res := []int{}
+
+	for _, e := range strings.Split(arr, delim) {
+		val, err := strconv.Atoi(e)
+		if err != nil {
+			panic(err)
+		}
+
+		res = append(res, val)
+	}
+
+	return res
+}
+
+func Make2DArr[T any](m, n int) [][]T {
+	arr := make([][]T, m)
+	for i := range arr {
+		arr[i] = make([]T, n)
+	}
+
+	return arr
+}
+
+func CopyMap[K comparable, V any](mp map[K]V) map[K]V {
+	newMap := map[K]V{}
+
+	for k, v := range mp {
+		newMap[k] = v
+	}
+
+	return newMap
+}
+
+func Gcd(a, b int) int {
+	if b == 0 {
+		return a
+	}
+
+	return Gcd(b, a%b)
 }

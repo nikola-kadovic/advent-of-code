@@ -11,7 +11,7 @@ import (
 func main() {
 	scanner := bufio.NewScanner(os.Stdin)
 
-	orders := []utils.Pair{}
+	orders := []utils.Vec{}
 
 	for scanner.Scan() {
 		line := scanner.Text()
@@ -23,7 +23,7 @@ func main() {
 		var a, b int
 		fmt.Sscanf(line, "%d|%d", &a, &b)
 
-		orders = append(orders, utils.Pair{First: a, Second: b})
+		orders = append(orders, utils.Vec{First: a, Second: b})
 	}
 
 	ans := 0
