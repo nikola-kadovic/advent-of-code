@@ -20,25 +20,24 @@ func main() {
 
 	for scanner.Scan() {
 		line := scanner.Text()
-		if canMakeUpWord(substrings, line) {
-			ans++
-		}
+		ans += canMakeUpWord(substrings, line)
 	}
+
 	fmt.Println(ans)
 }
 
-func canMakeUpWord(substrings []string, line string) bool {
-	// possible[i] == true iff line[:i] can be made up of substrings
-	possible := make([]bool, len(line)+1)
-	possible[0] = true
+func canMakeUpWord(substrings []string, line string) int {
+	// numOccurrences[i] = number of ways we can make up line[:i] with substrings
+	numOccurrences := make([]int, len(line)+1)
+	numOccurrences[0] = 1
 
 	for i := 0; i < len(line); i++ {
 		for _, sub := range substrings {
 			if i+len(sub) <= len(line) && line[i:i+len(sub)] == sub {
-				possible[i+len(sub)] = possible[i+len(sub)] || possible[i]
+				numOccurrences[i+len(sub)] += numOccurrences[i]
 			}
 		}
 	}
 
-	return possible[len(line)]
+	return numOccurrences[len(line)]
 }
