@@ -23,7 +23,7 @@ func main() {
 		var a, b int
 		fmt.Sscanf(line, "%d|%d", &a, &b)
 
-		orders = append(orders, utils.Vec{First: a, Second: b})
+		orders = append(orders, utils.Vec{X: a, Y: b})
 	}
 
 	ans := 0
@@ -40,14 +40,14 @@ func main() {
 		inOrder := true
 
 		for _, order := range orders {
-			_, okF := pos[order.First]
-			_, okS := pos[order.Second]
+			_, okF := pos[order.X]
+			_, okS := pos[order.Y]
 
 			if !okF || !okS {
 				continue
 			}
 
-			if pos[order.First] > pos[order.Second] {
+			if pos[order.X] > pos[order.Y] {
 				inOrder = false
 				break
 			}
@@ -60,11 +60,11 @@ func main() {
 		var lessThan map[int][]int = make(map[int][]int)
 
 		for _, order := range orders {
-			_, okF := pos[order.First]
-			_, okS := pos[order.Second]
+			_, okF := pos[order.X]
+			_, okS := pos[order.Y]
 
 			if okF && okS {
-				lessThan[order.Second] = append(lessThan[order.Second], order.First)
+				lessThan[order.Y] = append(lessThan[order.Y], order.X)
 			}
 		}
 
