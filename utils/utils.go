@@ -1,6 +1,7 @@
 package utils
 
 import (
+	"container/list"
 	"strconv"
 	"strings"
 
@@ -9,6 +10,28 @@ import (
 
 type Number interface {
 	constraints.Integer
+}
+
+type Queue[T any] struct {
+	data list.List
+}
+
+func NewQueue[T any]() Queue[T] {
+	return Queue[T]{data: list.List{}}
+}
+
+func (q *Queue[T]) Enqueue(val T) {
+	q.data.PushBack(val)
+}
+
+func (q *Queue[T]) Len() int {
+	return q.data.Len()
+}
+
+func (q *Queue[T]) Dequeue() T {
+	front := q.data.Front()
+	q.data.Remove(front)
+	return front.Value.(T)
 }
 
 func Abs(a int) int {
@@ -40,11 +63,15 @@ func BoolToInt(b bool) int {
 }
 
 type Vec struct {
-	First, Second int
+	X, Y int
 }
 
 func (v Vec) Add(other Vec) Vec {
-	return Vec{v.First + other.First, v.Second + other.Second}
+	return Vec{v.X + other.X, v.Y + other.Y}
+}
+
+func (v Vec) WithinBounds(m, n int) bool {
+	return v.X >= 0 && v.X < m && v.Y >= 0 && v.Y < n
 }
 
 var DiffAdj = []Vec{
@@ -133,4 +160,12 @@ func Gcd(a, b int) int {
 	}
 
 	return Gcd(b, a%b)
+}
+
+func GetAtVec[T any](loc Vec, arr [][]T) T {
+	return arr[loc.X][loc.Y]
+}
+
+func SetAtVec[T any](loc Vec, arr [][]T, val T) {
+	arr[loc.X][loc.Y] = val
 }
